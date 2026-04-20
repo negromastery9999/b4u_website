@@ -8,6 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-orange: #ff6b00;
@@ -33,85 +37,256 @@
 
         /* Navbar Styles */
         .navbar {
-            background-color: var(--black) !important;
+            background: linear-gradient(180deg, rgba(26,26,26,0.98) 0%, rgba(26,26,26,0.95) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 3px solid var(--primary-orange);
-            padding: 15px 0;
+            padding: 10px 0;
+            box-shadow: 0 4px 30px rgba(255, 107, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 5px 0;
+            box-shadow: 0 4px 30px rgba(255, 107, 0, 0.3);
+        }
+
+        .navbar-brand {
+            padding: 0;
+            margin-right: auto !important;
         }
 
         .navbar-brand img {
+            height: 75px;
+            transition: height 0.3s ease;
+        }
+
+        .navbar.scrolled .navbar-brand img {
             height: 60px;
         }
 
         .nav-link {
             color: #fff !important;
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin: 0 10px;
-            transition: color 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin: 0 4px;
+            padding: 12px 18px !important;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            position: relative;
         }
 
         .nav-link:hover {
+            color: var(--primary-orange) !important;
+            background: rgba(255, 107, 0, 0.1);
+        }
+
+        .nav-link.active {
             color: var(--primary-orange) !important;
         }
 
         .navbar-toggler {
             border-color: var(--primary-orange);
+            padding: 6px 10px;
         }
 
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 107, 0, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
 
+        .mobile-motto {
+            display: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--primary-orange);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-align: center;
+            padding: 8px 15px;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 0, 0.1), transparent);
+            text-shadow: 0 0 10px rgba(255, 107, 0, 0.5);
+        }
+
         /* Hero Section */
         .hero-section {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('logo/bg_image.jpg');
-            background-size: cover;
-            background-position: center;
+            position: relative;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             padding: 100px 20px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('logo/bg_image.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            animation: heroBgZoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroBgZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                180deg,
+                rgba(26,26,26,0.7) 0%,
+                rgba(26,26,26,0.4) 30%,
+                rgba(26,26,26,0.5) 60%,
+                rgba(26,26,26,0.9) 100%
+            );
+            z-index: 1;
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .hero-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { opacity: 0; transform: translateY(100vh) scale(0); }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.3; }
+            100% { opacity: 0; transform: translateY(-20vh) scale(1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 800px;
         }
 
         .hero-content h1 {
-            font-size: 4rem;
+            font-family: 'Oswald', sans-serif;
+            font-size: 5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 40px rgba(255, 107, 0, 0.5), 0 4px 20px rgba(0,0,0,0.8);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .hero-content h1 span {
             color: var(--primary-orange);
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
-            margin-bottom: 20px;
+        }
+
+        .hero-motto {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--primary-orange);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 25px;
+            padding: 12px 30px;
+            border: 2px solid var(--primary-orange);
+            border-radius: 50px;
+            display: inline-block;
+            background: rgba(255, 107, 0, 0.1);
+            backdrop-filter: blur(8px);
+            text-shadow: 0 0 20px rgba(255, 107, 0, 0.6);
+            animation: mottoPulse 3s ease-in-out infinite alternate;
+            box-shadow: 0 0 30px rgba(255, 107, 0, 0.2), inset 0 0 30px rgba(255, 107, 0, 0.05);
+        }
+
+        @keyframes mottoPulse {
+            from { box-shadow: 0 0 20px rgba(255, 107, 0, 0.2), inset 0 0 20px rgba(255, 107, 0, 0.05); border-color: var(--primary-orange); }
+            to { box-shadow: 0 0 40px rgba(255, 107, 0, 0.4), inset 0 0 40px rgba(255, 107, 0, 0.1); border-color: var(--light-orange); }
         }
 
         .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 35px;
+            color: rgba(255,255,255,0.85);
+            font-weight: 300;
+            letter-spacing: 1px;
         }
 
         .btn-order {
-            background-color: var(--primary-orange);
+            background: linear-gradient(145deg, var(--primary-orange), var(--dark-orange));
             color: #fff;
-            padding: 15px 40px;
-            font-size: 1.3rem;
-            font-weight: bold;
+            padding: 16px 45px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
             border: none;
             border-radius: 50px;
             transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(255, 107, 0, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-order::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-order:hover::before {
+            left: 100%;
         }
 
         .btn-order:hover {
-            background-color: var(--dark-orange);
+            background: linear-gradient(145deg, var(--light-orange), var(--primary-orange));
             color: #fff;
-            transform: scale(1.05);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(255, 107, 0, 0.6);
         }
 
         /* Section Styles */
         .section-title {
+            font-family: 'Oswald', sans-serif;
             color: var(--primary-orange);
             font-size: 2.5rem;
-            font-weight: bold;
+            font-weight: 700;
             text-align: center;
             margin-bottom: 50px;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .section-title::after {
@@ -119,8 +294,270 @@
             display: block;
             width: 100px;
             height: 4px;
-            background-color: var(--primary-orange);
+            background: linear-gradient(90deg, transparent, var(--primary-orange), transparent);
             margin: 15px auto;
+        }
+
+        /* Product Category Sections */
+        .cat-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 40px;
+            padding: 0 10px;
+        }
+
+        .cat-tab {
+            background: linear-gradient(145deg, #2a2a2a, #222);
+            color: #ccc;
+            border: 1px solid rgba(255, 107, 0, 0.15);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cat-tab:hover {
+            border-color: var(--primary-orange);
+            color: var(--primary-orange);
+            background: rgba(255, 107, 0, 0.1);
+        }
+
+        .cat-tab.active {
+            background: linear-gradient(145deg, var(--primary-orange), var(--dark-orange));
+            color: #fff;
+            border-color: var(--primary-orange);
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .slide-placeholder {
+            width: 280px;
+            height: 280px;
+            background: linear-gradient(145deg, #333, #252525);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            border: 2px dashed rgba(255, 107, 0, 0.2);
+        }
+
+        .slide-placeholder i {
+            font-size: 4rem;
+            color: rgba(255, 107, 0, 0.25);
+        }
+
+        .view-all-wrap {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn-view-all {
+            background: transparent;
+            color: var(--primary-orange);
+            border: 2px solid var(--primary-orange);
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-view-all:hover {
+            background: linear-gradient(145deg, var(--primary-orange), var(--dark-orange));
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Category Popup (View All) */
+        .cat-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 9998;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow-y: auto;
+        }
+
+        .cat-popup-overlay.active {
+            display: flex;
+        }
+
+        .cat-popup {
+            background: linear-gradient(145deg, var(--dark-gray), var(--black));
+            border: 2px solid var(--primary-orange);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 1000px;
+            width: 100%;
+            position: relative;
+            margin-top: 30px;
+        }
+
+        .cat-popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-orange);
+            color: #fff;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .cat-popup-close:hover {
+            background: var(--dark-orange);
+            transform: scale(1.1);
+        }
+
+        .cat-popup-title {
+            font-family: 'Oswald', sans-serif;
+            color: var(--primary-orange);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .cat-popup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .popup-item {
+            background: linear-gradient(145deg, #2a2a2a, #222);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 107, 0, 0.1);
+        }
+
+        .popup-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.25);
+            border-color: rgba(255, 107, 0, 0.3);
+        }
+
+        .popup-item-img {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(145deg, #333, #252525);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .popup-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .popup-item:hover .popup-item-img img {
+            transform: scale(1.08);
+        }
+
+        .popup-item-img i {
+            font-size: 3rem;
+            color: rgba(255, 107, 0, 0.25);
+        }
+
+        .popup-item h5 {
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .popup-item:hover h5 {
+            color: var(--primary-orange);
+        }
+
+        /* Category Item Zoom Lightbox */
+        .cat-zoom-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .cat-zoom-overlay.active {
+            display: flex;
+        }
+
+        .cat-zoom-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-orange);
+            color: #fff;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cat-zoom-close:hover {
+            background: var(--dark-orange);
+            transform: scale(1.1);
+        }
+
+        .cat-zoom-img {
+            max-width: 90%;
+            max-height: 75vh;
+            object-fit: contain;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(255, 107, 0, 0.3);
+        }
+
+        .cat-zoom-title {
+            color: var(--primary-orange);
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         /* Products Carousel Section */
@@ -726,9 +1163,34 @@
         }
 
         /* Responsive Styles */
+        @media (max-width: 992px) {
+            .mobile-motto {
+                display: block;
+            }
+
+            .navbar-brand img {
+                height: 60px;
+            }
+
+            .navbar.scrolled .navbar-brand img {
+                height: 50px;
+            }
+
+            .nav-link {
+                font-size: 1.05rem;
+                padding: 10px 14px !important;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero-content h1 {
                 font-size: 2.5rem;
+            }
+
+            .hero-motto {
+                font-size: 1.1rem;
+                padding: 10px 20px;
+                letter-spacing: 2px;
             }
 
             .hero-content p {
@@ -750,9 +1212,18 @@
                 max-height: 250px;
             }
 
+            .navbar-brand img {
+                height: 55px;
+            }
+
+            .navbar.scrolled .navbar-brand img {
+                height: 45px;
+            }
+
             .nav-link {
                 font-size: 1rem;
-                margin: 5px 0;
+                padding: 8px 12px !important;
+                margin: 3px 0;
             }
 
             .about-details {
@@ -767,11 +1238,36 @@
                 padding: 12px 25px;
                 font-size: 1rem;
             }
+
+            .cat-tab {
+                padding: 8px 14px;
+                font-size: 0.75rem;
+            }
+
+            .slide-placeholder {
+                width: 220px;
+                height: 220px;
+            }
+
+            .cat-popup-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 15px;
+            }
+
+            .popup-item-img {
+                height: 130px;
+            }
         }
 
         @media (max-width: 480px) {
             .hero-content h1 {
                 font-size: 2rem;
+            }
+
+            .hero-motto {
+                font-size: 0.85rem;
+                padding: 8px 15px;
+                letter-spacing: 1px;
             }
 
             .btn-order {
@@ -787,12 +1283,49 @@
             .menu-grid {
                 grid-template-columns: 1fr;
             }
+
+            .slide-placeholder {
+                width: 180px;
+                height: 180px;
+            }
+
+            .cat-tab {
+                padding: 6px 10px;
+                font-size: 0.65rem;
+            }
+
+            .cat-popup-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .popup-item-img {
+                height: 110px;
+            }
+
+            .popup-item h5 {
+                font-size: 0.8rem;
+                padding: 8px 6px;
+            }
+
+            .navbar-brand img {
+                height: 50px;
+            }
+
+            .navbar.scrolled .navbar-brand img {
+                height: 42px;
+            }
+
+            .nav-link {
+                font-size: 0.95rem;
+                padding: 6px 10px !important;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="#home">
                 <img src="logo/logo.png" alt="B4U Burgers Logo">
@@ -811,14 +1344,28 @@
                 </ul>
             </div>
         </div>
+        <!-- Mobile motto bar -->
+        <div class="mobile-motto">Hindi tinipid, Hindi din tinamad</div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="hero-particles">
+            <div class="hero-particle" style="left:10%; animation-delay:0s;"></div>
+            <div class="hero-particle" style="left:20%; animation-delay:1s;"></div>
+            <div class="hero-particle" style="left:35%; animation-delay:2s;"></div>
+            <div class="hero-particle" style="left:50%; animation-delay:0.5s;"></div>
+            <div class="hero-particle" style="left:65%; animation-delay:1.5s;"></div>
+            <div class="hero-particle" style="left:75%; animation-delay:3s;"></div>
+            <div class="hero-particle" style="left:85%; animation-delay:2.5s;"></div>
+            <div class="hero-particle" style="left:95%; animation-delay:4s;"></div>
+        </div>
         <div class="hero-content">
-            <h1>B4U Burgers</h1>
+            <h1>B4U <span>Burgers</span></h1>
+            <div class="hero-motto">Hindi tinipid, Hindi din tinamad</div>
             <p>Delicious Burgers Made Fresh Just For You!</p>
-            <a href="#order" class="btn btn-order">Order Now</a>
+            <a href="#order" class="btn btn-order"><i class="bi bi-bag-check"></i> Order Now</a>
         </div>
     </section>
 
@@ -829,54 +1376,35 @@
             <h2 class="section-title">Our Products</h2>
             <h3>Chef's Special Recommendations</h3>
         </div>
+
+        <!-- Category Tabs -->
+        <div class="cat-tabs" id="catTabs"></div>
+
+        <!-- Single dynamic carousel -->
         <div class="product-carousel">
-            <button class="carousel-btn prev" onclick="moveSlide(-1)"><i class="bi bi-chevron-left"></i></button>
-            <div class="product-slider" id="productSlider">
-                <div class="product-slide">
-                    <img src="img/Ham_and_egg.png" alt="Ham and Egg">
-                    <h3>Ham and Egg</h3>
-                    <span class="product-tag"><i class="bi bi-fire"></i> Best Seller</span>
-                </div>
-                <div class="product-slide">
-                    <img src="img/Pancake_Burger.png" alt="Pancake Burger">
-                    <h3>Pancake Burger</h3>
-                    <span class="product-tag"><i class="bi bi-star-fill"></i> Must Try</span>
-                </div>
-                <div class="product-slide">
-                    <img src="img/Pancake_Chicken_Burger.png" alt="Pancake Chicken Burger">
-                    <h3>Pancake Chicken Burger</h3>
-                    <span class="product-tag"><i class="bi bi-heart-fill"></i> Customer Favorite</span>
-                </div>
-                <div class="product-slide">
-                    <img src="img/Tuna_Steak.png" alt="Tuna Steak">
-                    <h3>Tuna Steak</h3>
-                    <span class="product-tag"><i class="bi bi-lightning-fill"></i> New Item</span>
-                </div>
-                <div class="product-slide">
-                    <img src="img/chicken_finger.png" alt="Chicken Finger">
-                    <h3>Chicken Finger</h3>
-                    <span class="product-tag"><i class="bi bi-hand-thumbs-up-fill"></i> Popular</span>
-                </div>
-                <div class="product-slide">
-                    <img src="img/double_chicken_burger.png" alt="Double Chicken Burger">
-                    <h3>Double Chicken Burger</h3>
-                    <span class="product-tag"><i class="bi bi-fire"></i> Best Seller</span>
-                </div>
-                <div class="product-slide">
-                    <img src="img/seafood_marinara.png" alt="Seafood Marinara">
-                    <h3>Seafood Marinara</h3>
-                    <span class="product-tag"><i class="bi bi-star-fill"></i> Must Try</span>
-                </div>
-                <div class="product-slide">
-                    <img src="img/shrimp_spicy_cajun.png" alt="Shrimp Spicy Cajun">
-                    <h3>Shrimp Spicy Cajun</h3>
-                    <span class="product-tag"><i class="bi bi-lightning-fill"></i> Spicy Special</span>
-                </div>
-            </div>
-            <button class="carousel-btn next" onclick="moveSlide(1)"><i class="bi bi-chevron-right"></i></button>
+            <button class="carousel-btn prev" onclick="moveCatSlide(-1)"><i class="bi bi-chevron-left"></i></button>
+            <div class="product-slider" id="productSlider"></div>
+            <button class="carousel-btn next" onclick="moveCatSlide(1)"><i class="bi bi-chevron-right"></i></button>
         </div>
         <div class="carousel-dots" id="carouselDots"></div>
+        <div class="view-all-wrap"><button class="btn-view-all" id="btnViewAll" onclick="openCategoryPopup()"><i class="bi bi-grid-3x3-gap"></i> View All</button></div>
     </section>
+
+    <!-- Category Popup (View All) -->
+    <div class="cat-popup-overlay" id="catPopupOverlay">
+        <div class="cat-popup">
+            <button class="cat-popup-close" onclick="closeCategoryPopup()"><i class="bi bi-x-lg"></i></button>
+            <h3 class="cat-popup-title" id="catPopupTitle"></h3>
+            <div class="cat-popup-grid" id="catPopupGrid"></div>
+        </div>
+    </div>
+
+    <!-- Category Item Zoom Lightbox -->
+    <div class="cat-zoom-overlay" id="catZoomOverlay">
+        <button class="cat-zoom-close" onclick="closeCatZoom()"><i class="bi bi-x-lg"></i></button>
+        <img src="" alt="" class="cat-zoom-img" id="catZoomImg">
+        <h4 class="cat-zoom-title" id="catZoomTitle"></h4>
+    </div>
 
     <!-- Menu Section -->
     <section id="menu" class="menu-section">
@@ -1048,41 +1576,114 @@
     <!-- Footer -->
     <footer>
         <img src="logo/logo.png" alt="B4U Burgers Logo">
-        <p>&copy; 2024 B4U Burgers. All Rights Reserved.</p>
+        <p>&copy; 2026 B4U Burgers. All Rights Reserved.</p>
+        <p>Developed by: CMS</p>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Product Carousel
+        // Product Category System
+        const categories = [
+            { id: 'burgers', name: 'Burgers', icon: 'bi-fire', items: [] },
+            { id: 'sandwiches', name: 'Sandwiches', icon: 'bi-layers', items: [] },
+            { id: 'combo-meals', name: 'Combo Meals', icon: 'bi-box-seam', items: [] },
+            { id: 'silog', name: 'Silog', icon: 'bi-egg-fried', items: [] },
+            { id: 'rice-meals', name: 'Rice Meals', icon: 'bi-bowl', items: [] },
+            { id: 'ala-carte', name: 'Ala Carte', icon: 'bi-clipboard', items: [] },
+            { id: 'pasta', name: 'Pasta', icon: 'bi-cup-hot', items: [] },
+            { id: 'salad', name: 'Salad', icon: 'bi-flower1', items: [] },
+            { id: 'beverages', name: 'Beverages', icon: 'bi-cup-straw', items: [] }
+        ];
+
+        // Generate 10 placeholder items per category
+        categories.forEach(cat => {
+            for (let i = 1; i <= 10; i++) {
+                cat.items.push({
+                    name: `${cat.name} ${i}`,
+                    img: '', // Add image path later
+                    tag: i <= 3 ? 'Featured' : ''
+                });
+            }
+        });
+
+        let activeCategory = 'burgers';
         let currentSlide = 0;
-        const slides = document.querySelectorAll('.product-slide');
-        const totalSlides = slides.length;
         const slider = document.getElementById('productSlider');
         const dotsContainer = document.getElementById('carouselDots');
 
-        // Create dots
-        for (let i = 0; i < totalSlides; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if (i === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => goToSlide(i));
-            dotsContainer.appendChild(dot);
+        // Build category tabs
+        function buildTabs() {
+            const tabsEl = document.getElementById('catTabs');
+            tabsEl.innerHTML = '';
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'cat-tab' + (cat.id === activeCategory ? ' active' : '');
+                btn.setAttribute('data-cat', cat.id);
+                btn.innerHTML = `<i class="bi ${cat.icon}"></i> ${cat.name}`;
+                btn.addEventListener('click', () => switchCategory(cat.id));
+                tabsEl.appendChild(btn);
+            });
         }
 
-        const dots = document.querySelectorAll('.dot');
+        // Switch category
+        function switchCategory(catId) {
+            activeCategory = catId;
+            currentSlide = 0;
+            document.querySelectorAll('.cat-tab').forEach(t => {
+                t.classList.toggle('active', t.getAttribute('data-cat') === catId);
+            });
+            buildSlider();
+        }
+
+        // Build slider for active category
+        function buildSlider() {
+            const cat = categories.find(c => c.id === activeCategory);
+            if (!cat) return;
+
+            slider.innerHTML = '';
+            cat.items.forEach(item => {
+                const slide = document.createElement('div');
+                slide.className = 'product-slide';
+                if (item.img) {
+                    slide.innerHTML = `<img src="${item.img}" alt="${item.name}"><h3>${item.name}</h3>${item.tag ? `<span class="product-tag"><i class="bi bi-star-fill"></i> ${item.tag}</span>` : ''}`;
+                } else {
+                    slide.innerHTML = `<div class="slide-placeholder"><i class="bi bi-image"></i></div><h3>${item.name}</h3>${item.tag ? `<span class="product-tag"><i class="bi bi-star-fill"></i> ${item.tag}</span>` : ''}`;
+                }
+                slider.appendChild(slide);
+            });
+
+            // Update View All button text
+            document.getElementById('btnViewAll').innerHTML = `<i class="bi bi-grid-3x3-gap"></i> View All ${cat.name}`;
+
+            // Rebuild dots
+            buildDots();
+            updateSlider();
+        }
+
+        function buildDots() {
+            const cat = categories.find(c => c.id === activeCategory);
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < cat.items.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === currentSlide ? ' active' : '');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            }
+        }
 
         function updateSlider() {
             slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-            dots.forEach((dot, index) => {
+            dotsContainer.querySelectorAll('.dot').forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentSlide);
             });
         }
 
-        function moveSlide(direction) {
+        function moveCatSlide(direction) {
+            const cat = categories.find(c => c.id === activeCategory);
             currentSlide += direction;
-            if (currentSlide >= totalSlides) currentSlide = 0;
-            if (currentSlide < 0) currentSlide = totalSlides - 1;
+            if (currentSlide >= cat.items.length) currentSlide = 0;
+            if (currentSlide < 0) currentSlide = cat.items.length - 1;
             updateSlider();
         }
 
@@ -1092,9 +1693,73 @@
         }
 
         // Auto-slide every 5 seconds
-        setInterval(() => {
-            moveSlide(1);
-        }, 5000);
+        let autoSlideInterval = setInterval(() => moveCatSlide(1), 5000);
+
+        // Category Popup (View All)
+        function openCategoryPopup() {
+            const cat = categories.find(c => c.id === activeCategory);
+            if (!cat) return;
+
+            document.getElementById('catPopupTitle').innerHTML = `<i class="bi ${cat.icon}"></i> ${cat.name}`;
+            const grid = document.getElementById('catPopupGrid');
+            grid.innerHTML = '';
+
+            cat.items.forEach((item, idx) => {
+                const el = document.createElement('div');
+                el.className = 'popup-item';
+                if (item.img) {
+                    el.innerHTML = `<div class="popup-item-img"><img src="${item.img}" alt="${item.name}"></div><h5>${item.name}</h5>`;
+                } else {
+                    el.innerHTML = `<div class="popup-item-img"><i class="bi bi-image"></i></div><h5>${item.name}</h5>`;
+                }
+                el.addEventListener('click', () => openCatZoom(item));
+                grid.appendChild(el);
+            });
+
+            document.getElementById('catPopupOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCategoryPopup() {
+            document.getElementById('catPopupOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Category Item Zoom
+        function openCatZoom(item) {
+            if (item.img) {
+                document.getElementById('catZoomImg').src = item.img;
+                document.getElementById('catZoomImg').style.display = 'block';
+            } else {
+                document.getElementById('catZoomImg').style.display = 'none';
+            }
+            document.getElementById('catZoomTitle').textContent = item.name;
+            document.getElementById('catZoomOverlay').classList.add('active');
+        }
+
+        function closeCatZoom() {
+            document.getElementById('catZoomOverlay').classList.remove('active');
+        }
+
+        // Close popups on overlay click
+        document.getElementById('catPopupOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeCategoryPopup();
+        });
+        document.getElementById('catZoomOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeCatZoom();
+        });
+
+        // Close popups on Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCatZoom();
+                closeCategoryPopup();
+            }
+        });
+
+        // Initialize
+        buildTabs();
+        buildSlider();
 
         // Payment Method Toggle
         const cashChange = document.getElementById('cashChange');
@@ -1196,15 +1861,25 @@
             }
 
             // Build the message for Messenger
-            let message = `🍔 NEW ORDER FROM B4U BURGERS 🍔%0A%0A`;
-            message += `👤 Name: ${encodeURIComponent(name)}%0A`;
-            message += `📦 Orders:%0A${encodeURIComponent(orders)}%0A%0A`;
-            message += `📍 Location:%0A${encodeURIComponent(location)}%0A`;
-            message += `💳 Payment: ${encodeURIComponent(paymentText)}%0A%0A`;
-            message += `Thank you! 🙏`;
+            let message = `NEW ORDER FROM B4U BURGERS %0A%0A`;
+            message += `Name: ${encodeURIComponent(name)}%0A`;
+            message += `Orders:%0A${encodeURIComponent(orders)}%0A%0A`;
+            message += `Location:%0A${encodeURIComponent(location)}%0A`;
+            message += `Payment: ${encodeURIComponent(paymentText)}%0A%0A`;
+            message += `Thank you!`;
 
             // Redirect to Messenger with pre-filled message
             window.location.href = `https://m.me/B4Uburger?text=${message}`;
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
 
         // Smooth scroll for navigation links
